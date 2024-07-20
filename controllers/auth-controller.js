@@ -191,3 +191,56 @@ exports.editUser = async (req, res) => {
 };
 
 exports.forgotDetails = async (req, res, next) => {};
+
+
+exports.changePassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    // Find the user by id
+    const foundUser = await User.findById(id);
+    if (!foundUser) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    // check password
+    const passwordMatch = await bcrypt.compare(oldPassword, foundUser.password);
+    if (!passwordMatch) {
+      return res
+        .status(400)
+        .json({ error: "Password Incorrect, Please try again!" });
+    }
+
+    // encrypting new password
+    const saltRounds = 10;
+    const hashedPssword = await bcrypt.hash(newPassword, saltRounds);
+
+    await User.findOneAndUpdate({ _id: id }, { password: hashedPssword });
+    return res.status(200).json({ msg: "Password updated successfully!" });
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body;
+
+    // Find the user by id
+    const foundUser = await User.findById(id);
+    if (!foundUser) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    // encrypting new password
+    const saltRounds = 10;
+    const hashedPssword = await bcrypt.hash(password, saltRounds);
+
+    await User.findOneAndUpdate({ _id: id }, { password: hashedPssword });
+    return res.status(200).json({ msg: "Password updated successfully!" });
+  } catch (error) {
+    return res.status(400).json({ msg: error.message });
+  }
+};
