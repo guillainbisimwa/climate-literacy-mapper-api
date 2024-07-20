@@ -20,7 +20,7 @@ exports.findOne = async (req, res) => {
     const avec = await Translated.findOne({ _id: req.params.id });
     return res.status(200).json(avec);
   } catch (error) {
-    return res.status(404).json({ "Translated not found!: ": error });
+    return res.status(404).json({ "Translation not found!: ": error });
   }
 };
 
@@ -38,11 +38,11 @@ exports.create = async (req, res) => {
     const savedTranslated = await newTranslated.save();
     return res
       .status(201)
-      .json({ message: "Translated saved successfully", avec: savedTranslated });
+      .json({ message: "Translation saved successfully", avec: savedTranslated });
   } catch (err) {
     return res
       .status(400)
-      .json({ error: "Translated not saved!", details: err.message });
+      .json({ error: "Translation not saved!", details: err.message });
   }
 };
 
@@ -50,7 +50,7 @@ exports.update = async (req, res) => {
   try {
     const foundTranslated = await Translated.findOne({ _id: req.params.id });
     if (!foundTranslated) {
-      return res.status(404).json({ error: "Translated not found!" });
+      return res.status(404).json({ error: "Translation not found!" });
     }
     const updatedTranslated = await Translated.updateOne(
       { _id: foundTranslated._id },
@@ -58,11 +58,11 @@ exports.update = async (req, res) => {
       { new: true }
     );
     return res.json({
-      message: "Translated updated successfully",
+      message: "Translation updated successfully",
       avec: updatedTranslated,
     });
   } catch (error) {
-    return res.status(400).json({ error: "Translated not updated!", details: error });
+    return res.status(400).json({ error: "Translation not updated!", details: error });
   }
 };
 
@@ -70,14 +70,14 @@ exports.delete = async (req, res) => {
   try {
     const foundTranslated = await Translated.findOne({ _id: req.params.id });
     if (!foundTranslated) {
-      return res.status(404).json({ error: "Translated not found!" });
+      return res.status(404).json({ error: "Translation not found!" });
     }
     const deletedTranslated = await Translated.deleteOne({ _id: foundTranslated._id });
     return res.json({
-      message: "Translated deleted successfully",
+      message: "Translation deleted successfully",
       avec: deletedTranslated,
     });
   } catch (error) {
-    return res.status(500).json({ error: "Translated not deleted!", details: error });
+    return res.status(500).json({ error: "Translation not deleted!", details: error });
   }
 };
