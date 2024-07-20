@@ -120,3 +120,42 @@ exports.loginByPhone = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+
+exports.findAll = async (req, res) => {
+  try {
+    const user = await User.find();
+    if (!user) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    console.log("User", user);
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(400).json({ "error: ": error });
+  }
+};
+
+exports.findOne = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(404).json({ "User not found!: ": error });
+  }
+};
+
+exports.findByMobile = async (req, res) => {
+  try {
+    const user = await User.findOne({ mobile: req.params.mobile });
+    if (!user) {
+      return res.status(200).json({ msg: "User not found!" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(404).json({ "User not found!: ": error });
+  }
+};
