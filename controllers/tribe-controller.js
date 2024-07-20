@@ -6,10 +6,6 @@ exports.findAll = async (req, res) => {
       .populate({
         path: "owner",
         select: "name email mobile role status cover_url profile_pic",
-      })
-      .populate({
-        path: "membres.user",
-        select: "name email mobile role status cover_url profile_pic",
       });
 
     console.log("tribes", tribes);
