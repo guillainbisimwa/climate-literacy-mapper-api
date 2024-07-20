@@ -159,3 +159,35 @@ exports.findByMobile = async (req, res) => {
     return res.status(404).json({ "User not found!: ": error });
   }
 };
+
+
+exports.editUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { name, email, mobile, role, cover_url, profile_pic } =
+      req.body;
+
+    // Find the user by userId
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found!" });
+    }
+
+    // Update user details
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.mobile = mobile || user.mobile;
+    user.role = role || user.role;
+    user.cover_url = cover_url || user.cover_url;
+    user.profile_pic = profile_pic || user.profile_pic;
+
+    // Save the updated user
+    await user.save();
+
+    return res.status(200).json({ msg: "User updated successfully!", user });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+exports.forgotDetails = async (req, res, next) => {};
