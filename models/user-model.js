@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
   role: { type: String },
   cover_url: { type: String },
   profile_pic: { type: String },
+  timestamp: { type: Date, default: Date.now() },
   
   status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPETED', 'BANNED'], default: 'PENDING'},
 
