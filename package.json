@@ -1,0 +1,7 @@
+{
+  "name": "climate-literacy-mapper-api",
+  "version": "1.0.0",
+  "description": "A climate literacy mapper backend",
+  "main": "index.js",
+  "license": "MIT"
+}
