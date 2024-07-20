@@ -41,3 +41,43 @@ exports.signup = async (req, res) => {
     return res.status(400).json({ error: error.message });
   }
 };
+
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const foundUser = await User.findOne({ email });
+    if (!foundUser) {
+      return res.status(404).json({ msg: "User not found!" });
+    }
+
+    // compare the two passwords
+    const passwordMatch = await bcrypt.compare(password, foundUser.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ msg: "Invalid Password!" });
+    }
+
+    // generate token
+    const secretKey = process.env.SECRET_KEY;
+    const userData = {
+      userId: foundUser._id,
+      email: foundUser.email,
+      name: foundUser.name,
+      mobile: foundUser.mobile,
+      username: foundUser.username,
+      profile_pic: foundUser.profile_pic,
+    };
+    const token = jwt.sign(userData, secretKey, { expiresIn: "24h" });
+
+    return await res.status(200).json({
+      msg: "Login successful",
+      user: {
+        token,
+        user: userData,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
