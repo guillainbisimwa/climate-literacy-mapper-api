@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const tribeSchema = mongoose.Schema({
+const translatedSchema = mongoose.Schema({
   // Climate change 
   // Pre-lesson questions 8
   preLesson: [
@@ -48,5 +48,5 @@ const tribeSchema = mongoose.Schema({
 
 });
 
-const Tribe = mongoose.model("Tribe", tribeSchema);
-module.exports = Tribe;
+const Translated = mongoose.model("Translated", translatedSchema);
+module.exports = Translated;
