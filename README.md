@@ -15,7 +15,7 @@ The project is private to an organization and licensed MIT
 
 👤 WEZA LAB
 
-- Github: [@bvenceslas]()
+- Github: [@wezalab]()
 - Twitter: [@wezalab]()
 - Linkedin: [wezalab]()
 
