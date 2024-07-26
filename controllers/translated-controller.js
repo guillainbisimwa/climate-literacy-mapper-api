@@ -17,19 +17,19 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
   try {
-    const avec = await Translated.findOne({ _id: req.params.id });
-    return res.status(200).json(avec);
+    const translation = await Translated.findOne({ _id: req.params.id });
+    return res.status(200).json(translation);
   } catch (error) {
     return res.status(404).json({ "Translation not found!: ": error });
   }
 };
 
 /**
- * This function, Create A avec with an initial TimeLine message
+ * This function, Create A translation with an initial TimeLine message
  *
  * @param {*} req
  * @param {*} res
- * @returns  { message: String , avec: Array }
+ * @returns  { message: String , translation: Array }
  */
 
 exports.create = async (req, res) => {
@@ -38,7 +38,7 @@ exports.create = async (req, res) => {
     const savedTranslated = await newTranslated.save();
     return res
       .status(201)
-      .json({ message: "Translation saved successfully", avec: savedTranslated });
+      .json({ message: "Translation saved successfully", translation: savedTranslated });
   } catch (err) {
     return res
       .status(400)
@@ -59,7 +59,7 @@ exports.update = async (req, res) => {
     );
     return res.json({
       message: "Translation updated successfully",
-      avec: updatedTranslated,
+      translation: updatedTranslated,
     });
   } catch (error) {
     return res.status(400).json({ error: "Translation not updated!", details: error });
@@ -75,7 +75,7 @@ exports.delete = async (req, res) => {
     const deletedTranslated = await Translated.deleteOne({ _id: foundTranslated._id });
     return res.json({
       message: "Translation deleted successfully",
-      avec: deletedTranslated,
+      translation: deletedTranslated,
     });
   } catch (error) {
     return res.status(500).json({ error: "Translation not deleted!", details: error });

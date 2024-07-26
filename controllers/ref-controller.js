@@ -17,19 +17,19 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
   try {
-    const avec = await Ref.findOne({ _id: req.params.id });
-    return res.status(200).json(avec);
+    const ref = await Ref.findOne({ _id: req.params.id });
+    return res.status(200).json(ref);
   } catch (error) {
     return res.status(404).json({ "Ref not found!: ": error });
   }
 };
 
 /**
- * This function, Create A avec with an initial TimeLine message
+ * This function, Create A ref with an initial TimeLine message
  *
  * @param {*} req
  * @param {*} res
- * @returns  { message: String , avec: Array }
+ * @returns  { message: String , ref: Array }
  */
 
 exports.create = async (req, res) => {
@@ -38,7 +38,7 @@ exports.create = async (req, res) => {
     const savedRef = await newRef.save();
     return res
       .status(201)
-      .json({ message: "Ref saved successfully", avec: savedRef });
+      .json({ message: "Ref saved successfully", ref: savedRef });
   } catch (err) {
     return res
       .status(400)
@@ -59,7 +59,7 @@ exports.update = async (req, res) => {
     );
     return res.json({
       message: "Ref updated successfully",
-      avec: updatedRef,
+      ref: updatedRef,
     });
   } catch (error) {
     return res.status(400).json({ error: "Ref not updated!", details: error });
@@ -75,7 +75,7 @@ exports.delete = async (req, res) => {
     const deletedRef = await Ref.deleteOne({ _id: foundRef._id });
     return res.json({
       message: "Ref deleted successfully",
-      avec: deletedRef,
+      ref: deletedRef,
     });
   } catch (error) {
     return res.status(500).json({ error: "Ref not deleted!", details: error });
