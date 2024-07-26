@@ -17,19 +17,19 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
   try {
-    const avec = await Tribe.findOne({ _id: req.params.id });
-    return res.status(200).json(avec);
+    const tribe = await Tribe.findOne({ _id: req.params.id });
+    return res.status(200).json(tribe);
   } catch (error) {
     return res.status(404).json({ "Tribe not found!: ": error });
   }
 };
 
 /**
- * This function, Create A avec with an initial TimeLine message
+ * This function, Create A tribe with an initial TimeLine message
  *
  * @param {*} req
  * @param {*} res
- * @returns  { message: String , avec: Array }
+ * @returns  { message: String , tribe: Array }
  */
 
 exports.create = async (req, res) => {
@@ -38,7 +38,7 @@ exports.create = async (req, res) => {
     const savedTribe = await newTribe.save();
     return res
       .status(201)
-      .json({ message: "Tribe saved successfully", avec: savedTribe });
+      .json({ message: "Tribe saved successfully", tribe: savedTribe });
   } catch (err) {
     return res
       .status(400)
@@ -59,7 +59,7 @@ exports.update = async (req, res) => {
     );
     return res.json({
       message: "Tribe updated successfully",
-      avec: updatedTribe,
+      tribe: updatedTribe,
     });
   } catch (error) {
     return res.status(400).json({ error: "Tribe not updated!", details: error });
@@ -75,7 +75,7 @@ exports.delete = async (req, res) => {
     const deletedTribe = await Tribe.deleteOne({ _id: foundTribe._id });
     return res.json({
       message: "Tribe deleted successfully",
-      avec: deletedTribe,
+      tribe: deletedTribe,
     });
   } catch (error) {
     return res.status(500).json({ error: "Tribe not deleted!", details: error });
