@@ -22,13 +22,26 @@ app.use("/api/tribe", require("./routes/tribe-route"));
 app.use("/api/translated", require("./routes/translated-route"));
 app.use("/api/ref", require("./routes/ref-route"));
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`CLM backend listening on port ${PORT} ...`);
-  // db connection
-  mongoose
-    .connect(process.env.DB_URI)
-    .then(() => {
-      console.log(`Connected to the DB ...`);
-    })
-    .catch((err) => console.log("Error while connecting to the DB: " + err));
+
+  let timeout = 25;
+  while (mongoose.connection.readyState === 0) {
+    if (timeout === 0) {
+      console.log('timeout');
+      throw new Error(
+        'timeout occured with mongoose connection',
+      );
+    }
+    await mongoose.connect(process.env.DB_PATH, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    timeout--;
+  }
+  console.log(
+    'Database connection status:',
+    mongoose.connection.readyState,
+  );
+
 });
