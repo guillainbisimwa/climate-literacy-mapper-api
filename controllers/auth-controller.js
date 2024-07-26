@@ -36,7 +36,7 @@ exports.signup = async (req, res) => {
     });
 
     await newUser.save();
-    return res.status(201).json({ msg: "User created successfully!" });
+    return res.status(201).json({ user: newUser, msg: "User created successfully!" });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
