@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const refSchema = mongoose.Schema({
-  email: {type: string },
+  email: {type: String },
   phone: { type: String},
   
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
