@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/", tribeCtrl.findAll);
 router.get("/:id", tribeCtrl.findOne);
-
+router.get("/tribe/:tribe", tribeCtrl.findOneByName);
 
 router.post("/", tribeCtrl.create);
 router.put("/:id", tribeCtrl.update);

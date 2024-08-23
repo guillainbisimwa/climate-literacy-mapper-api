@@ -24,6 +24,15 @@ exports.findOne = async (req, res) => {
   }
 };
 
+exports.findOneByName = async (req, res) => {
+  try {
+    const tribe = await Tribe.findOne({ tribe: req.params.tribe });
+    return res.status(200).json(tribe);
+  } catch (error) {
+    return res.status(404).json({ "Tribe not found!: ": error });
+  }
+};
+
 /**
  * This function, Create A tribe with an initial TimeLine message
  *
