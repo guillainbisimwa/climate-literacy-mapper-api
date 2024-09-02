@@ -10,8 +10,8 @@ const translate_ = mongoose.Schema({
 
 const tribeSchema = new mongoose.Schema({
   climate_know_exist: { type: Boolean, required: true },
-  tribe: { type: String },
-
+  tribe: { type: String }, // name
+  belongs: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
   // What is climate change in your native language
   climate_change_in_language: {
     translate: { type: [translate_], default: [] },
@@ -22,23 +22,25 @@ const tribeSchema = new mongoose.Schema({
     type: {
       type: String,
       enum: ['Point'],
-      required: true,
+      // required: true,
       default: 'Point'
     },
     coordinates: {
       type: [Number],
-      required: true
+      // required: true
     }
   },
   proof_link: [{
     name: String,
     link: String,
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    vote: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
     status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPTED', 'BANNED'], default: 'PENDING' },
   }],
   images: [{
     type: [String], 
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    vote: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
     status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPTED', 'BANNED'], default: 'PENDING' },
   }],
 
