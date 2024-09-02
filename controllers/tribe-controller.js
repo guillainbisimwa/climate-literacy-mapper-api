@@ -25,14 +25,6 @@ exports.findOne = async (req, res) => {
 };
 
 exports.findOneByName = async (req, res) => {
-  //   try {
-  //     const tribe = await Tribe.findOne({ tribe: req.params.tribe });
-  //     return res.status(200).json(tribe);
-  //   } catch (error) {
-  //     return res.status(404).json({ "Tribe not found!: ": error });
-  //   }
-  // };
-
   try {
     console.log("tribe", req.params.tribe);
     // const tribe = await Tribe.findOne({ tribe: req.params.tribe });
@@ -45,8 +37,27 @@ exports.findOneByName = async (req, res) => {
     return res.status(200).json(tribe);
   } catch (error) {
     console.error("Error fetching tribe:", error); // Log the error to the console
-    return res.status(500).json({ message: "Server error", error: error.message });  }
+    return res.status(500).json({ message: "Server error", error: error.message });
+  }
 }
+
+// Express route handler
+exports.findTribeByBelongsId = async (req, res) => {
+  const { id } = req.params; // Get the ID from the request parameters
+
+  try {
+    // Find a tribe where the belongs array includes the given ID
+    const tribe = await Tribe.findOne({ belongs: id });
+
+    if (!tribe) {
+      return res.status(404).json({ message: 'Tribe not found' });
+    }
+
+    return res.status(200).json(tribe);
+  } catch (error) {
+    return res.status(500).json({ message: 'Server error', error });
+  }
+};
 
 /**
  * This function, Create A tribe with an initial TimeLine message
