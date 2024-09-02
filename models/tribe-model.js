@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const translate = mongoose.Schema({
+const translate_ = mongoose.Schema({
   value: { type: String },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   timestamp: { type: Date, default: Date.now() },
@@ -13,8 +13,8 @@ const tribeSchema = new mongoose.Schema({
   tribe: { type: String },
 
   // What is climate change in your native language
-  climate_change_in_lang: {
-    translate: { type: [translate], default: [] },
+  climate_change_in_language: {
+    translate: { type: [translate_], default: [] },
     status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPTED', 'BANNED'], default: 'PENDING' },
   },
 

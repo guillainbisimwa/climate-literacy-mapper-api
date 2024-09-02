@@ -34,14 +34,18 @@ exports.findOneByName = async (req, res) => {
   // };
 
   try {
-    const tribe = await Tribe.findOne({ tribe: req.params.tribe });
+    console.log("tribe", req.params.tribe);
+    // const tribe = await Tribe.findOne({ tribe: req.params.tribe });
+    const tribe = await Tribe.findOne({ tribe: new RegExp(`^${req.params.tribe}$`, 'i') });
+
+    console.log(tribe);
     if (!tribe) {
       return res.status(404).json({ message: "Tribe not found!" });
     }
     return res.status(200).json(tribe);
   } catch (error) {
-    return res.status(500).json({ message: "Server error", error });
-  }
+    console.error("Error fetching tribe:", error); // Log the error to the console
+    return res.status(500).json({ message: "Server error", error: error.message });  }
 }
 
 /**
