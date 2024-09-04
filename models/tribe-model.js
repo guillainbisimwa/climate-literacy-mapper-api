@@ -38,7 +38,7 @@ const tribeSchema = new mongoose.Schema({
     status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPTED', 'BANNED'], default: 'PENDING' },
   }],
   images: [{
-    type: [String], 
+    image: String, 
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     vote: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
     status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPTED', 'BANNED'], default: 'PENDING' },
