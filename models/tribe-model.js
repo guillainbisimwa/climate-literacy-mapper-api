@@ -19,15 +19,11 @@ const tribeSchema = new mongoose.Schema({
   },
 
   location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      // required: true,
-      default: 'Point'
+    radius: {
+      type: Number,
     },
     coordinates: {
       type: [Number],
-      // required: true
     }
   },
   proof_link: [{
