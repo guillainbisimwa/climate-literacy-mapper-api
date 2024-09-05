@@ -18,14 +18,14 @@ const tribeSchema = new mongoose.Schema({
     status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPTED', 'BANNED'], default: 'PENDING' },
   },
 
-  location: {
+  location: [{
     radius: {
       type: Number,
     },
     coordinates: {
       type: [Number],
     }
-  },
+  }],
   proof_link: [{
     name: String,
     link: String,
