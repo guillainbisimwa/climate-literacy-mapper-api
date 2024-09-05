@@ -19,9 +19,7 @@ const tribeSchema = new mongoose.Schema({
   },
 
   location: [{
-    radius: {
-      type: Number,
-    },
+    radius:Number,
     coordinates: {
       type: [Number],
     }
