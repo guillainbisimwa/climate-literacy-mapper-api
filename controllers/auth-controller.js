@@ -13,6 +13,10 @@ exports.signup = async (req, res) => {
       role,
       cover_url,
       profile_pic,
+      address,
+      city,
+      country,
+      isVerified
     } = req.body;
 
     const existingMobile = await User.findOne({ mobile });
@@ -33,6 +37,10 @@ exports.signup = async (req, res) => {
       role,
       cover_url,
       profile_pic,
+      address,
+      city,
+      country,
+      isVerified
     });
 
     await newUser.save();
@@ -67,6 +75,10 @@ exports.login = async (req, res) => {
       mobile: foundUser.mobile,
       username: foundUser.username,
       profile_pic: foundUser.profile_pic,
+      address: foundUser.address,
+      city: foundUser.city,
+      country: foundUser.country,
+      isVerified: foundUser.isVerified
     };
     const token = jwt.sign(userData, secretKey, { expiresIn: "24h" });
 
@@ -106,6 +118,10 @@ exports.loginByPhone = async (req, res) => {
       mobile: foundUser.mobile,
       username: foundUser.username,
       profile_pic: foundUser.profile_pic,
+      address: foundUser.address,
+      city: foundUser.city,
+      country: foundUser.country,
+      isVerified: foundUser.isVerified
     };
     const token = jwt.sign(userData, secretKey, { expiresIn: "24h" });
 
@@ -180,6 +196,10 @@ exports.editUser = async (req, res) => {
     user.role = role || user.role;
     user.cover_url = cover_url || user.cover_url;
     user.profile_pic = profile_pic || user.profile_pic;
+    user.address =  address || user.address,
+    user.city =  city || user.city,
+    user.country =  country || user.country,
+    user.isVerified =  is || user.isVerified
 
     // Save the updated user
     await user.save();
