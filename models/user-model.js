@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
   address: { type: String },
   state: { type: String },
   city: { type: String },
-  role: { type: String },
+  role: { type: String, default:"USER" },
   isVerified: { type: Boolean, dafault: false },
   cover_url: { type: String },
   profile_pic: { type: String },
