@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
   role: { type: String, default:"USER" },
   isVerified: { type: Boolean, dafault: false },
   cover_url: { type: String },
+  country : { type: String },
   profile_pic: { type: String },
   timestamp: { type: Date, default: Date.now() },
   status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPETED', 'BANNED', "DEACTIVATED"], default: 'PENDING'},
