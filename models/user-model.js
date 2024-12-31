@@ -14,8 +14,7 @@ const userSchema = mongoose.Schema({
   country : { type: String },
   profile_pic: { type: String },
   timestamp: { type: Date, default: Date.now() },
-  status: { type: String, enum: ['PENDING', 'REJECTED', 'ACCEPETED', 'BANNED', "DEACTIVATED"], default: 'PENDING'},
-
+  status: { type: String, enum: ['PENDING', 'ACTIVE', 'BANNED'], default: 'PENDING'},
 });
 
 const User = mongoose.model("User", userSchema);
