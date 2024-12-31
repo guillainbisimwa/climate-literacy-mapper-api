@@ -14,4 +14,7 @@ router.get("/", authCtrl.findAll);
 router.get("/:id", authCtrl.findOne);
 router.get("/mobile/:mobile", authCtrl.findByMobile);
 
+router.patch("/update-user/:userId", authCtrl.patchUser);
+
 module.exports = router;
+// harpic
