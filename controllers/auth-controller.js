@@ -78,7 +78,8 @@ exports.login = async (req, res) => {
       address: foundUser.address,
       city: foundUser.city,
       country: foundUser.country,
-      isVerified: foundUser.isVerified
+      isVerified: foundUser.isVerified,
+      status: foundUser.status
     };
     const token = jwt.sign(userData, secretKey, { expiresIn: "24h" });
 
@@ -121,7 +122,8 @@ exports.loginByPhone = async (req, res) => {
       address: foundUser.address,
       city: foundUser.city,
       country: foundUser.country,
-      isVerified: foundUser.isVerified
+      isVerified: foundUser.isVerified,
+      status: foundUser.status
     };
     const token = jwt.sign(userData, secretKey, { expiresIn: "24h" });
 
@@ -140,7 +142,7 @@ exports.loginByPhone = async (req, res) => {
 
 exports.findAll = async (req, res) => {
   try {
-    const user = await User.find();
+    const user = await User.find({ role: "USER" });
     if (!user) {
       return res.status(404).json({ error: "User not found!" });
     }
@@ -180,7 +182,7 @@ exports.findByMobile = async (req, res) => {
 exports.editUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { name, email, mobile, role, cover_url, profile_pic } =
+    const { name, email, mobile, role, cover_url, profile_pic, address, city, country, isVerified } =
       req.body;
 
     // Find the user by userId
@@ -196,10 +198,10 @@ exports.editUser = async (req, res) => {
     user.role = role || user.role;
     user.cover_url = cover_url || user.cover_url;
     user.profile_pic = profile_pic || user.profile_pic;
-    user.address =  address || user.address,
-    user.city =  city || user.city,
-    user.country =  country || user.country,
-    user.isVerified =  is || user.isVerified
+    user.address = address || user.address,
+    user.city = city || user.city,
+    user.country = country || user.country,
+    user.isVerified = isVerified || user.isVerified
 
     // Save the updated user
     await user.save();
@@ -210,7 +212,7 @@ exports.editUser = async (req, res) => {
   }
 };
 
-exports.forgotDetails = async (req, res, next) => {};
+exports.forgotDetails = async (req, res, next) => { };
 
 
 exports.changePassword = async (req, res) => {
@@ -273,9 +275,20 @@ exports.patchUser = async (req, res) => {
       return res.status(400).json({ message: "User ID is required." });
     }
 
+    // Initialize an object to hold the updates
+    const updates = { ...req.body };
+
+    // Check if password is being updated
+    if (req.body.password) {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(req.body.password, saltRounds);
+      updates.password = hashedPassword; // Set the hashed password in the updates
+    }
+
+    // Update the user with the new data
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      req.body,
+      updates,
       { new: true, runValidators: true }
     );
 
@@ -285,6 +298,6 @@ exports.patchUser = async (req, res) => {
 
     res.status(200).json({ message: "User updated successfully!", user: updatedUser });
   } catch (error) {
-    res.status(400).json({ message: "Failed to update user.", error: error.message });
+    res.status(400).json({ message: "Failed to update user:", error: error.message });
   }
 };
