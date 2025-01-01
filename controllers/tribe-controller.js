@@ -116,3 +116,33 @@ exports.delete = async (req, res) => {
     return res.status(500).json({ error: "Tribe not deleted!", details: error });
   }
 };
+
+
+
+exports.patchTribe = async (req, res) => {
+  try {
+    const { tribeId } = req.params;
+
+    if (!tribeId) {
+      return res.status(400).json({ message: "Tribe ID is required." });
+    }
+
+    // Initialize an object to hold the updates
+    const updates = { ...req.body };
+
+    // Update the user with the new data
+    const updatedTribe = await Tribe.findByIdAndUpdate(
+      tribeId,
+      updates,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedTribe) {
+      return res.status(404).json({ message: "Tribe not found." });
+    }
+
+    res.status(200).json({ message: "Tribe updated successfully!", tribe: updatedTribe });
+  } catch (error) {
+    res.status(400).json({ message: "Failed to update tribe:", error: error.message });
+  }
+};

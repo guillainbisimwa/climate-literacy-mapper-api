@@ -11,4 +11,6 @@ router.post("/", tribeCtrl.create);
 router.put("/:id", tribeCtrl.update);
 router.delete("/:id", tribeCtrl.delete);
 
+router.patch("/update-tribe/:tribeId", tribeCtrl.patchTribe);
+
 module.exports = router;
