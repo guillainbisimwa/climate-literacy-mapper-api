@@ -22,6 +22,14 @@ exports.findAll = async (req, res) => {
       .populate({
         path: "images.owner",
         select: "name email mobile role status cover_url profile_pic",
+      })
+      .populate({
+        path: "belongs",
+        select: "name email mobile role status cover_url profile_pic",
+      })
+      .populate({
+        path: "climate_change_in_language.translate.owner",
+        select: "name email mobile role status cover_url profile_pic",
       });
 
     console.log("tribes", tribes);
@@ -52,7 +60,15 @@ exports.findOne = async (req, res) => {
     .populate({
       path: "images.owner",
       select: "name email mobile role status cover_url profile_pic",
+    }).populate({
+      path: "belongs",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "climate_change_in_language.translate.owner",
+      select: "name email mobile role status cover_url profile_pic",
     });
+    
     return res.status(200).json(tribe);
   } catch (error) {
     return res.status(404).json({ "Tribe not found!: ": error });
