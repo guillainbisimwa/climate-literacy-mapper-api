@@ -6,6 +6,22 @@ exports.findAll = async (req, res) => {
       .populate({
         path: "owner",
         select: "name email mobile role status cover_url profile_pic",
+      })
+      .populate({
+        path: "proof_link.vote",
+        select: "name email mobile role status cover_url profile_pic",
+      })
+      .populate({
+        path: "proof_link.owner",
+        select: "name email mobile role status cover_url profile_pic",
+      })
+      .populate({
+        path: "images.vote",
+        select: "name email mobile role status cover_url profile_pic",
+      })
+      .populate({
+        path: "images.owner",
+        select: "name email mobile role status cover_url profile_pic",
       });
 
     console.log("tribes", tribes);
@@ -17,7 +33,26 @@ exports.findAll = async (req, res) => {
 
 exports.findOne = async (req, res) => {
   try {
-    const tribe = await Tribe.findOne({ _id: req.params.id });
+    const tribe = await Tribe.findOne({ _id: req.params.id }).populate({
+      path: "owner",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "proof_link.vote",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "proof_link.owner",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "images.vote",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "images.owner",
+      select: "name email mobile role status cover_url profile_pic",
+    });
     return res.status(200).json(tribe);
   } catch (error) {
     return res.status(404).json({ "Tribe not found!: ": error });
