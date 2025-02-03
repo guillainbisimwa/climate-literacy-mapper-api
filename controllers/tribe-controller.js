@@ -68,7 +68,7 @@ exports.findOne = async (req, res) => {
       path: "climate_change_in_language.translate.owner",
       select: "name email mobile role status cover_url profile_pic",
     });
-    
+
     return res.status(200).json(tribe);
   } catch (error) {
     return res.status(404).json({ "Tribe not found!: ": error });
@@ -186,7 +186,33 @@ exports.patchTribe = async (req, res) => {
       tribeId,
       updates,
       { new: true, runValidators: true }
-    );
+    ).populate({
+      path: "owner",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "proof_link.vote",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "proof_link.owner",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "images.vote",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "images.owner",
+      select: "name email mobile role status cover_url profile_pic",
+    }).populate({
+      path: "belongs",
+      select: "name email mobile role status cover_url profile_pic",
+    })
+    .populate({
+      path: "climate_change_in_language.translate.owner",
+      select: "name email mobile role status cover_url profile_pic",
+    });
 
     if (!updatedTribe) {
       return res.status(404).json({ message: "Tribe not found." });
