@@ -5,7 +5,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
+    "pm2:start": "pm2 start app.js --name clm",
+    "pm2:stop": "pm2 stop clm",
+    "pm2:restart": "pm2 restart clm",
+    "pm2:delete": "pm2 delete clm",
+    "pm2:list": "pm2 list"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -16,6 +22,7 @@
     "mongoose": "^6.10.1",
     "mongoose-unique-validator": "^4.0.0",
     "morgan": "^1.10.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "pm2": "^5.4.3"
   }
 }
